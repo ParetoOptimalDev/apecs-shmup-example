@@ -48,9 +48,6 @@ Finally, we use `random` for our RNG, and import some base stuff.
 
 > import System.Random
 > import System.Exit
-> import Control.Monad
-> import Data.Monoid
-> import Data.Semigroup (Semigroup)
 
 We need `Monoid` for `mempty`, but in recent GHC's that requires also defining `Semigroup` instances.
 So, depending on your GHC version, you might not actually need the `Semigroup` import/instances.
@@ -83,7 +80,7 @@ Unit types are common in apecs, as they can be used to tag an Entity.
 
 `Particle` is also used to tag an Entity, but unlike `Target` and `Bullet`, also has a remaining life span (in seconds) field.
 
-> data Particle = Particle Float deriving stock Show
+> newtype Particle = Particle Float deriving newtype Show
 > instance Component Particle where type Storage Particle = Map Particle
 
 `Player` is a unit type, but instead of storing it in a `Map`, we use a `Unique`.
@@ -151,7 +148,7 @@ With that, we are ready to start writing our first Systems.
 
 > initialize :: System' ()
 > initialize = do
->   playerEty <- newEntity (Player, Position playerPos, Velocity 0)
+>   newEntity_ (Player, Position playerPos, Velocity 0)
 >   pass
 
 `initialize` initializes our game state.
@@ -264,7 +261,7 @@ Putting it together:
 > clearBullets :: System' ()
 > clearBullets = cmap $ \(Bullet, Position (V2 _ y), Score s) ->
 >   if y > 170
->      then Right $ (Not @(Bullet, Kinetic), Score (s-missPenalty))
+>      then Right (Not @(Bullet, Kinetic), Score (s-missPenalty))
 >      else Left ()
 
 In some cases, just because something can be expressed in `cmap`, does not mean it necessarily should.
@@ -332,7 +329,9 @@ If you hadn't noticed by the way, `get` doesn't need a `Proxy` because unlike e.
 > triggerEvery dT period phase sys = do
 >   Time t <- get global
 >   let t' = t + phase
->       trigger = floor (t'/period) /= floor ((t'+dT)/period)
+>       (./=) :: Integer -> Integer -> Bool
+>       (./=) = (/=)
+>       trigger = floor (t'/period) ./= floor ((t'+dT)/period)
 >   when trigger $ void sys
 
 `spawnParticles` does what it says on the tin.
