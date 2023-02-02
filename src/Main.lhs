@@ -27,6 +27,10 @@ Don't worry, GHC will happily let you know if you missed any.
 > {-# LANGUAGE TypeFamilies               #-}
 > {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
+*Not part of the typical apecs tutorial*: Hide some imports where Relude clashes with gloss:
+
+> import Prelude hiding (Down, Map, exitSuccess, get, modify, all)
+
 The `Apecs` module forms the apecs prelude, it re-exports everything you typically need.
 
 > import Apecs
@@ -62,31 +66,31 @@ We'll mostly be using the most basic store here, called `Map`.
 The reason we use `Float` over `Double` is that most OpenGL-based libraries, including gloss, use `Float`s.
 You can use `Double`, but if you don't need the extra accuracy, using `Float` will save you a bunch of conversions.
 
-> newtype Position = Position (V2 Float) deriving Show
+> newtype Position = Position (V2 Float) deriving stock Show
 > instance Component Position where type Storage Position = Map Position
 > 
-> newtype Velocity = Velocity (V2 Float) deriving Show
+> newtype Velocity = Velocity (V2 Float) deriving stock Show
 > instance Component Velocity where type Storage Velocity = Map Velocity
 
 The following two Components are unit types, i.e. they only have a single inhabitant.
 Unit types are common in apecs, as they can be used to tag an Entity.
 
-> data Target = Target deriving Show
+> data Target = Target deriving stock Show
 > instance Component Target where type Storage Target = Map Target
 > 
-> data Bullet = Bullet deriving Show
+> data Bullet = Bullet deriving stock Show
 > instance Component Bullet where type Storage Bullet = Map Bullet
 
 `Particle` is also used to tag an Entity, but unlike `Target` and `Bullet`, also has a remaining life span (in seconds) field.
 
-> data Particle = Particle Float deriving Show
+> data Particle = Particle Float deriving stock Show
 > instance Component Particle where type Storage Particle = Map Particle
 
 `Player` is a unit type, but instead of storing it in a `Map`, we use a `Unique`.
 A `Unique` is a `Map` that will only hold a single Component; if we assign `Player` to Entity 3 and then to Entity 4, only Entity 4 will have a `Player`.
 This enforces that there is only ever one player at the store level, and it will be the first example of how a store can change the behavior of a Component.
 
-> data Player = Player deriving Show
+> data Player = Player deriving stock Show
 > instance Component Player where type Storage Player = Unique Player
 
 The third store we will use is `Global`, used to model global variables.
@@ -98,12 +102,12 @@ The initial value of a `Global` will be drawn from that Component's `Monoid` ins
 
 `Score` keeps the score, and `Time` the total elapsed time.
 
-> newtype Score = Score Int deriving (Show, Num)
+> newtype Score = Score Int deriving newtype (Show, Num)
 > instance Semigroup Score where (<>) = (+)
 > instance Monoid Score where mempty = 0
 > instance Component Score where type Storage Score = Global Score
 > 
-> newtype Time = Time Float deriving (Show, Num)
+> newtype Time = Time Float deriving newtype (Show, Num)
 > instance Semigroup Time where (<>) = (+)
 > instance Monoid Time where mempty = 0
 > instance Component Time where type Storage Time = Global Time
@@ -148,7 +152,7 @@ With that, we are ready to start writing our first Systems.
 > initialize :: System' ()
 > initialize = do
 >   playerEty <- newEntity (Player, Position playerPos, Velocity 0)
->   return ()
+>   pass
 
 `initialize` initializes our game state.
 In this case we only create a player, at the initial player position and with a velocity of 0.
@@ -299,6 +303,7 @@ I won't go into further detail here, but the take-away here is that `cmap` is pr
 
 Anyway, collision handling:
 
+> handleCollisions :: SystemT World IO ()
 > handleCollisions =
 >   cmapM_ $ \(Target, Position posT, etyT) ->
 >     cmapM_ $ \(Bullet, Position posB, etyB) ->
@@ -375,12 +380,12 @@ We define a function that maps each possible input to a System:
 > 
 > handleEvent (EventKey (SpecialKey KeySpace) Down _ _) =
 >   cmapM_ $ \(Player, pos) -> do
->     newEntity (Bullet, pos, Velocity (V2 0 bulletSpeed))
+>     newEntity_ (Bullet, pos, Velocity (V2 0 bulletSpeed))
 >     spawnParticles 7 pos (-80,80) (10,100)
 >
 > handleEvent (EventKey (SpecialKey KeyEsc) Down   _ _) = liftIO exitSuccess
 > 
-> handleEvent _ = return ()
+> handleEvent _ = pass
 
 Next, we'll look at drawing.
 This is done by constructing gloss `Picture` values.
