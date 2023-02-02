@@ -1,14 +1,19 @@
 This document breaks down a small game written using apecs.
+
 We're going to be making a little shoot 'em up-style game, mirroring the Entitas example.
+
 Consider this a vertical slice; we'll cover most of apecs' features, but not in great detail.
+
 If you are not familiar with the basics of ECS it might be worth reading the introductory sections of the paper.
 
 If you want to run the game, clone this repository and run `stack exec shmup`.
 Since this document is a literate Haskell file (or a rendered markdown file, in which case the `.lhs` file is in the same folder), you can also compile it directly with GHC and run the game.
+
 The arrow keys move you, space shoots, escape quits.
 If you have any questions or suggestions while working through this tutorial, don't hesitate to create an issue or send a message.
 
 Let's start at the top.
+
 Apecs' type-level machinery tends to effect a large number of pragma's.
 Don't worry, GHC will happily let you know if you missed any.
 
