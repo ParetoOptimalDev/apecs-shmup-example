@@ -1,5 +1,5 @@
 {
-  description = "srid/haskell-template: Nix template for Haskell projects";
+  description = "A nix flake with the Haskell from the shmup example in the Apecs repo";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -23,7 +23,7 @@
         # has only one.
         haskellProjects.main = {
           packages = {
-            haskell-template.root = ./.;
+            apecs-shmup-example.root = ./.;
           };
           buildTools = hp:
             let
@@ -90,14 +90,14 @@
           run = {
             description = "Run the project with ghcid auto-recompile";
             exec = ''
-              ghcid -c "cabal repl exe:haskell-template" --warnings -T :main
+              ghcid -c "cabal repl exe:apecs-shmup-example" --warnings -T :main
             '';
             category = "Primary";
           };
         };
 
         # Default package.
-        packages.default = self'.packages.main-haskell-template;
+        packages.default = self'.packages.main-apecs-shmup-example;
 
         # Default shell.
         devShells.default =
