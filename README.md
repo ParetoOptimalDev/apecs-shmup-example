@@ -37,6 +37,10 @@ nix develop
 , run
 ```
 
+#### with vscode
+
+See https://srid.ca/haskell-template/start#vscode
+
 # What this is
 
 A nix flake to build the [shmup example from the apecs repo](https://github.com/jonascarpay/apecs/blob/master/examples/Shmup.md).
