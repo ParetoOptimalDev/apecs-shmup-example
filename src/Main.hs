@@ -8,6 +8,7 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 
+import Prelude hiding (Map, modify, get, Down, exitSuccess)
 import Apecs
 import Apecs.Gloss
 import Control.Monad
