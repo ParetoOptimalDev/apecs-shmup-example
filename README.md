@@ -37,6 +37,28 @@ nix develop
 , run
 ```
 
+#### Powers you have in the nix devshell thanks to [srid/haskell-template](https://github.com/srid/haskell-template)
+
+```shell
+~/apecs-shmup-example $ ,
+Available commands:
+
+## Dev Tools
+
+  , docs  : Start Hoogle server for project dependencies
+  , repl  : Start the cabal repl
+
+## Dev Tools 
+
+  , fmt  : Format the source tree
+
+## Primary
+
+  , run  : Run the project with ghcid auto-recompile
+```
+
+See the [Tips section](https://github.com/srid/haskell-template#tips) on srid/haskell-template for more info.
+
 #### with vscode
 
 See https://srid.ca/haskell-template/start#vscode
