@@ -8,7 +8,6 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TypeFamilies #-}
 
-import Prelude hiding (Map, modify, get, Down, exitSuccess)
 import Apecs
 import Apecs.Gloss
 import Control.Monad
@@ -17,6 +16,7 @@ import Data.Semigroup (Semigroup)
 import Linear
 import System.Exit
 import System.Random
+import Prelude hiding (Down, Map, exitSuccess, get, modify)
 
 newtype Position = Position (V2 Float) deriving stock (Show)
 
