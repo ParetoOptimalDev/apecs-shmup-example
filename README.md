@@ -9,6 +9,7 @@ nix run github:ParetoOptimalDev/apecs-shmup-example
 
 <details>
 <summary>click here for nix install instructions otherwise</summary>
+
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
@@ -57,7 +58,7 @@ Available commands:
   , run  : Run the project with ghcid auto-recompile
 ```
 
-See the [Tips section](https://github.com/srid/haskell-template#tips) on srid/haskell-template for more info.
+See the [tips section](https://github.com/srid/haskell-template#tips) on srid/haskell-template for more info.
 
 #### with vscode
 
