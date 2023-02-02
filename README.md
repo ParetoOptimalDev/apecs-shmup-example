@@ -1,8 +1,14 @@
 # Quickly running
 
-<details>
-<summary>If you don't already have nix installed, click here</summary>
 
+Assuming you have nix installed, just run:
+
+```sh
+nix run github:ParetoOptimalDev/apecs-shmup-example
+```
+
+<details>
+<summary>click here for nix install instructions otherwise</summary>
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
@@ -10,10 +16,6 @@ sh <(curl -L https://nixos.org/nix/install) --daemon
 Or see the [Nix download page](https://nixos.org/download.html) for other options if you don't like that one or it somehow manages not to work.
 
 </details>
-
-```sh
-nix run github:ParetoOptimalDev/apecs-shmup-example
-```
 
 # Developing
 
