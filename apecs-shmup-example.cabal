@@ -93,4 +93,4 @@ common shared
 
 executable apecs-shmup-example
   import:  shared
-  main-is: src/Main.hs
+  main-is: Main.hs
