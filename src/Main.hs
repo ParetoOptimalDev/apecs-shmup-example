@@ -18,27 +18,27 @@ import Linear
 import System.Exit
 import System.Random
 
-newtype Position = Position (V2 Float) deriving (Show)
+newtype Position = Position (V2 Float) deriving stock (Show)
 
 instance Component Position where type Storage Position = Map Position
 
-newtype Velocity = Velocity (V2 Float) deriving (Show)
+newtype Velocity = Velocity (V2 Float) deriving stock (Show)
 
 instance Component Velocity where type Storage Velocity = Map Velocity
 
-data Target = Target deriving (Show)
+data Target = Target deriving stock (Show)
 
 instance Component Target where type Storage Target = Map Target
 
-data Bullet = Bullet deriving (Show)
+data Bullet = Bullet deriving stock (Show)
 
 instance Component Bullet where type Storage Bullet = Map Bullet
 
-data Particle = Particle Float deriving (Show)
+data Particle = Particle Float deriving stock (Show)
 
 instance Component Particle where type Storage Particle = Map Particle
 
-data Player = Player deriving (Show)
+data Player = Player deriving stock (Show)
 
 instance Component Player where type Storage Player = Unique Player
 
