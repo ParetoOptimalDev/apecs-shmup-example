@@ -20,7 +20,7 @@ Or see the [Nix download page](https://nixos.org/download.html) for other option
 # Developing
 
 
-#### with [direnv]() already installed
+#### with [direnv](https://github.com/direnv/direnv) already installed
 
 ```sh
 git clone https://github.com/ParetoOptimalDev/apecs-shmup-example.git
@@ -28,7 +28,7 @@ cd apecs-shmup-example
 , run
 ```
 
-#### without [direnv]()
+#### without [direnv](https://github.com/direnv/direnv)
 
 ```sh
 git clone https://github.com/ParetoOptimalDev/apecs-shmup-example.git
