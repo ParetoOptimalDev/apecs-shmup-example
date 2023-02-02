@@ -1,33 +1,44 @@
-# haskell-template
+# Quickly running
 
-Get a Haskell development environment up and running quickly. Thanks to Nix, this template is optimized for a fully reproducible and friendly development environment. It is based on:
+<details>
+<summary>If you don't already have nix installed, click here</summary>
 
-- [Nix](https://srid.ca/haskell-nix) + [Flakes](https://serokell.io/blog/practical-nix-flakes) (via [`github:srid/haskell-flake`](https://github.com/srid/haskell-flake)) + GHC 9.2
-- VSCode + [HLS](https://github.com/haskell/haskell-language-server)
-- [fourmolu](https://github.com/fourmolu/fourmolu) autoformatting 
-- [Relude](https://github.com/kowainik/relude#relude) as Prelude.
-  - `.hlint.yaml` is [from relude](https://github.com/kowainik/relude/blob/main/.hlint.yaml)
-- Devshell scripts (`,` prefixed) are provided via [mission-control](https://github.com/Platonic-Systems/mission-control)
+```sh
+sh <(curl -L https://nixos.org/nix/install) --daemon
+```
 
-If you have an *existing* Haskell project, you should probably use https://github.com/srid/haskell-flake instead.
+Or see the [Nix download page](https://nixos.org/download.html) for other options if you don't like that one or it somehow manages not to work.
 
-## Getting Started
+</details>
 
-*tldr: Install Nix, enable Flakes, open in VSCode and run `, run`.*
+```sh
+nix run github:ParetoOptimalDev/apecs-shmup-example
+```
 
-For details, see: https://srid.ca/haskell-template/start
+# Developing
 
-## Tips
 
-- Run `nix flake update` to update all flake inputs.
-- Run `nix build .#check -L` to run the flake checks.
-- Run `, fmt` in nix shell to autoformat the project. This uses [treefmt](https://github.com/numtide/treefmt).
-- Run `, docs` to start Hoogle with packages in your cabal file.
-- Run the application without installing: `nix run github:srid/haskell-template` (or `nix run .` from checkout)
-- Common workflows
-  - Adding library dependencies in Nix: https://srid.ca/haskell-template/dependency
-  - Adding tests: https://srid.ca/haskell-template/tests
+#### with [direnv]() already installed
 
-## Discussions
+```sh
+git clone https://github.com/ParetoOptimalDev/apecs-shmup-example.git
+cd apecs-shmup-example
+, run
+```
 
-Questions? Ideas? Suggestions? You may post them here: https://github.com/srid/haskell-template/discussions
+#### without [direnv]()
+
+```sh
+git clone https://github.com/ParetoOptimalDev/apecs-shmup-example.git
+cd apecs-shmup-example
+nix develop
+, run
+```
+
+# What this is
+
+A nix flake to build the [shmup example from the apecs repo](https://github.com/jonascarpay/apecs/blob/master/examples/Shmup.md).
+
+# Why
+
+Because build issues having to install haskell and system libraries like opengl are a thing of the past thanks to [Nix](https://nixos.org/) :smile:
